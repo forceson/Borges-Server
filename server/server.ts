@@ -2,23 +2,36 @@ import {createError} from 'http-errors';
 import express from 'express';
 import bodyParser from 'body-parser';
 import * as path from 'path';
+import mongoose from 'mongoose';
 import logger from 'morgan';
 
-import indexRouter from './routes';
-import usersRouter from './routes/users';
+import {sentenceRouter, platformRouter} from './routes';
 
 export function bootstrap() {
     const app = express();
+    const NODE_ENV = process.env;
 
-    app.set('views', path.join(__dirname, 'views'));
+    mongoose
+        .connect(NODE_ENV.BORGES_DB_HOST, {
+            user: NODE_ENV.BORGES_DB_USERNAME,
+            pass: NODE_ENV.BORGES_DB_PSW,
+            dbName: 'borges-db',
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            poolSize: 10
+        })
+        .then(() => console.info('Successfully connected to mongodb'))
+        .catch(e => console.error(e));
+
+    app.set('views', path.join(__dirname, '../client/views'));
     app.set('view engine', 'pug');
 
     app.use(bodyParser.json({limit: '50mb'}));
     app.use(bodyParser.urlencoded({limit: '50mb', extended: false}));
 
     app.use(express.static(path.join(__dirname, '../public')));
-    app.use('/', indexRouter);
-    app.use('/users', usersRouter);
+    app.use('/sentences', sentenceRouter);
+    app.use('/platforms', platformRouter);
 
     app.use(logger('dev'));
 
@@ -41,6 +54,6 @@ export function bootstrap() {
     const PORT = 4000;
 
     app.listen({port: PORT}, () => {
-        logger(`🚀 Server ready at http://localhost:${PORT}`)
+        console.info(`🚀 Server ready at http://localhost:${PORT}`)
     })
 }
