@@ -1,2 +1,4 @@
-export { default as sentenceRouter } from './sentence'
-export { default as platformRouter } from './platform'
+export { default as apiSentenceRouter } from './api/sentence'
+export { default as apiPlatformRouter } from './api/platform'
+export { default as mainRouter } from './front/main'
+export { default as platformRouter } from './front/platform'

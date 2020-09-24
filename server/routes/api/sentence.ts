@@ -1,5 +1,5 @@
 import express from 'express';
-import Sentence from '../db/Sentence'
+import Sentence from '../../db/Sentence'
 import bodyParser from 'body-parser';
 
 const router = express.Router();

@@ -1,6 +1,6 @@
 import express from 'express';
-import Platform from '../db/Platform'
-import Sentence from '../db/Sentence'
+import Platform from '../../db/Platform'
+import Sentence from '../../db/Sentence'
 import bodyParser from 'body-parser';
 
 const router = express.Router();

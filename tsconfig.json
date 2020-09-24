@@ -2,9 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es6",
-    "lib": [
-      "es2016"
-    ],
+    "lib": ["es2016", "esnext.asynciterable"],
     "moduleResolution": "node",
     "outDir": "dist",
     "emitDecoratorMetadata": true,
@@ -12,6 +10,12 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  }
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": ["node_modules/*"]
+    }
+  },
+  "include": ["server/**/*"],
+  "exclude": ["client/**/*.vue"]
 }
